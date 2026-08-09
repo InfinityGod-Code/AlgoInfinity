@@ -6,11 +6,11 @@ CheatSheet :
 ```
 | Operation | Python       | Complexity |
 | --------- | ------------ | ---------- |
-| Push      | `append(x)`  | O(1)       |
-| Pop       | `pop()`      | O(1)       |
-| Peek      | `stack[-1]`  | O(1)       |
-| Empty     | `not stack`  | O(1)       |
-| Size      | `len(stack)` | O(1)       |
+| Push      |  append(x)   | O(1)       |
+| Pop       |  pop()       | O(1)       |
+| Peek      |  stack[-1]   | O(1)       |
+| Empty     |  not stack   | O(1)       |
+| Size      |  len(stack)  | O(1)       |
 
 ```
 
