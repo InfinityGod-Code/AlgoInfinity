@@ -11,5 +11,5 @@ A structured repo mastering DSA. Each problem includes multiple solution tiers (
 Just run the Python file and it should automatically displays proper results with proper Status : 
 
 <p align="center">
-  <img src="assets/demo.png" alt="Alt" width="100%" width="65%">
+  <img src="assets/demo.png" alt="Alt" width="100%" height="65%">
 </p>
