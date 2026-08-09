@@ -1,0 +1,13 @@
+name,function,args,expected
+simple_open_close,isValidParentheses,"[""()""]",true
+all_bracket_types,isValidParentheses,"[""()[]{}""]",true
+mismatched_square,isValidParentheses,"[""(]""]",false
+interleaved,isValidParentheses,"[""([)]""]",false
+nested,isValidParentheses,"[""{[]}""]",true
+empty_string,isValidParentheses,"[""""]",false
+single_open,isValidParentheses,"[""(""]",false
+single_close,isValidParentheses,"["")""]",false
+deeply_nested,isValidParentheses,"[""((()))""]",true
+unclosed_opens,isValidParentheses,"[""([{""]",false
+wrong_order,isValidParentheses,"[""}{""]",false
+type_mismatch,isValidParentheses,"[""(}""]",false
