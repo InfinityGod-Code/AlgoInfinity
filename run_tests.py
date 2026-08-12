@@ -74,9 +74,21 @@ def _load_cases(csv_path: Path) -> list[dict]:
 
 
 def _decode(row: dict) -> tuple:
-    args = json.loads(row.get("args") or "[]")
-    kwargs = json.loads(row.get("kwargs") or "{}")
-    expected = json.loads(row.get("expected"))
+    defaults = {"args": "[]", "kwargs": "{}", "expected": "null"}
+    for field in ("args", "kwargs", "expected"):
+        cell = row.get(field) or defaults[field]
+        try:
+            if field == "args":
+                args = json.loads(cell)
+            elif field == "kwargs":
+                kwargs = json.loads(cell)
+            else:
+                expected = json.loads(cell)
+        except json.JSONDecodeError as exc:
+            raise ValueError(
+                f"{field!r} cell is not valid JSON in test case {row.get('name')!r}: {exc}. "
+                'Remember: JSON strings must be quoted, e.g. bare `ca` must be written as "ca".'
+            ) from None
     return args, kwargs, expected
 
 
