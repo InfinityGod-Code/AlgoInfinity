@@ -201,11 +201,3 @@ Companion to the String DP sheet. Covers every other major DP category asked in 
 12. **Probability DP** → Knight Probability → New 21 Game
 
 ---
-
-## Notes for Exam-Style Practice
-- Identify the pattern first by asking: *"What changes as I move through the problem?"* — an index (1D), two indices (grid/2-pointer), a capacity/sum (knapsack), or a subset (bitmask).
-- For Knapsack-family problems, always clarify aloud: bounded vs unbounded, and 0/1 vs counting vs boolean — this determines loop direction and combination rule.
-- Practice space-optimizing 2D knapsack/grid DPs down to a 1D rolling array — a very common follow-up in interviews.
-- For Bitmask and Digit DP, always state the meaning of every dimension of the state explicitly before coding; these are the two patterns examiners most often penalize for unclear state definitions.
-
-Want full worked solutions (code + dry run) for any specific pattern, or a combined timed mock test mixing String DP and these patterns?

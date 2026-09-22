@@ -133,9 +133,4 @@ A curated, pattern-first roadmap for String DP, the way it's usually asked in co
 
 ---
 
-## Notes for Exam-Style Practice
-- Always state **state definition**, **base case**, **transition**, and **final answer cell** before coding — examiners score this separately from code correctness.
-- Most patterns above collapse from O(n·m) space to O(min(n,m)) or O(n) with a rolling array — a common "optimize the solution" follow-up question.
-- Practice writing both the **top-down (memoized recursion)** and **bottom-up (tabulation)** versions; interviews often ask you to convert one to the other on the spot.
 
-Want me to add full worked solutions (code + dry run) for any specific pattern above, or generate a timed mock quiz from this list?
