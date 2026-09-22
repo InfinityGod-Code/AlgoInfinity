@@ -6,7 +6,7 @@ class Solution:
         Time  : O(n * target) - polynomial
         Space : O(target) - optimized from O(n * target)
         """
-        n = len(nums)
+        
         total_sum = sum(nums)
 
         if total_sum % 2 != 0:
