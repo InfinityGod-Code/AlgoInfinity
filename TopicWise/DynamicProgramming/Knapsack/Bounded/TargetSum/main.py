@@ -1,16 +1,19 @@
 class Solution:
     def solution(self, nums: list, target: int) -> int:
         """
-        Count sign assignments that make nums evaluate to target.
-        Reduces the problem to counting subsets with sum (total + target) / 2.
-        Time  : O(n * subset_sum)
-        Space : O(subset_sum)
+        :type nums: List[int]
+        :type target: int
+        :rtype: int 
         """
+        memo={}
         def target_sum(index, current_sum) -> int : 
             #base condition
             
             if index == len(nums):
                 return 1 if current_sum == target else 0
+
+            if (index, current_sum) in memo:
+                return memo[(index, current_sum)]
 
             positive = target_sum(
                 index + 1,
@@ -21,8 +24,9 @@ class Solution:
                 index + 1,
                 current_sum - nums[index]
             )
+            memo[(index, current_sum)] = positive + negative
 
-            return positive + negative
+            return memo[(index, current_sum)]
 
         return target_sum(0, 0)
 
