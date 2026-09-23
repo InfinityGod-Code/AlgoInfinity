@@ -53,12 +53,13 @@ if __name__ == "__main__":
 
 `test_cases.csv` must use JSON values for `args` and `expected`. Keep the
 `function` column as `solution` unless you intentionally want to test another
-method.
+method. Add `timeout_ms` to every test case so the runner can mark the case as
+time limit exceeded when runtime goes over that row's limit.
 
 ```csv
-name,function,args,expected
-basic,solution,"[[1, 2, 3], 3]","true"
-edge_empty,solution,"[[], 0]","0"
+name,function,args,expected,timeout_ms
+basic,solution,"[[1, 2, 3], 3]","true",1000
+edge_empty,solution,"[[], 0]","0",1000
 ```
 
 Useful commands:

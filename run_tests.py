@@ -7,13 +7,14 @@ Usage:
 
 Each solution lives next to a test_cases.csv whose rows look like:
 
-    name,function,args,expected
-    basic,isValidParentheses,"[""()"",""()[]{}""]",true
+    name,function,args,expected,timeout_ms
+    basic,isValidParentheses,"[""()"",""()[]{}""]",true,100
 
 Cells `args` and `expected` are JSON values. `args` is decoded to *args and
 `kwargs` (optional column) to **kwargs. The `function` column picks which
 method on the Solution class to call, so multiple solution tiers can share
-one test file.
+one test file. The optional `timeout_ms` column fails a case with "time limit
+exceeded" when that row runs longer than the configured limit.
 
 Requires `rich` (see requirements.txt) but degrades to plain ANSI output if
 it is not installed.
@@ -92,9 +93,29 @@ def _decode(row: dict) -> tuple:
     return args, kwargs, expected
 
 
+def _timeout_ms(row: dict) -> float | None:
+    cell = (row.get("timeout_ms") or "").strip()
+    if not cell:
+        return None
+
+    try:
+        timeout_ms = float(cell)
+    except ValueError:
+        raise ValueError(
+            f"'timeout_ms' cell must be a number in test case {row.get('name')!r}: {cell!r}."
+        ) from None
+
+    if timeout_ms <= 0:
+        raise ValueError(
+            f"'timeout_ms' cell must be greater than 0 in test case {row.get('name')!r}."
+        )
+    return timeout_ms
+
+
 def _run_single(console, solution_cls, row) -> tuple[bool, float, object, str | None]:
     function = row.get("function") or "solution"
     args, kwargs, expected = _decode(row)
+    timeout_ms = _timeout_ms(row)
 
     if not hasattr(solution_cls, function):
         return False, 0.0, None, f"Solution has no method {function!r}"
@@ -103,6 +124,13 @@ def _run_single(console, solution_cls, row) -> tuple[bool, float, object, str | 
     try:
         result = getattr(solution_cls(), function)(*args, **kwargs)
         elapsed_ms = (time.perf_counter() - started) * 1000
+        if timeout_ms is not None and elapsed_ms > timeout_ms:
+            return (
+                False,
+                elapsed_ms,
+                result,
+                f"time limit exceeded: {elapsed_ms:.2f} ms > {timeout_ms:g} ms",
+            )
         return result == expected, elapsed_ms, result, None
     except Exception as exc:
         elapsed_ms = (time.perf_counter() - started) * 1000
@@ -113,6 +141,10 @@ def _render_result(console, row, ok, elapsed_ms, error, expected, got):
     name = row.get("name") or "case"
     function = row.get("function") or "solution"
     args, kwargs, _ = _decode(row)
+    timeout_ms = _timeout_ms(row)
+    timing = f"{elapsed_ms:.2f} ms"
+    if timeout_ms is not None:
+        timing = f"{timing} / {timeout_ms:g} ms limit"
 
     if _HAS_RICH:
         badge = (
@@ -121,7 +153,7 @@ def _render_result(console, row, ok, elapsed_ms, error, expected, got):
         desc = Text()
         desc.append(f"{name}  ", style="bold")
         desc.append(f"[{function}({_format_args(args, kwargs)})] ", style="dim")
-        desc.append(f"{elapsed_ms:.2f} ms", style="dim")
+        desc.append(timing, style="dim")
         console.print(badge, desc)
         if not ok:
             if error:
@@ -133,7 +165,7 @@ def _render_result(console, row, ok, elapsed_ms, error, expected, got):
                 console.print(f"      [red]got:[/red]      {_pp(got)}")
     else:  # pragma: no cover
         status = "PASS" if ok else "FAIL"
-        console.print(f"[{status}] {name} ({function}): {elapsed_ms:.2f} ms")
+        console.print(f"[{status}] {name} ({function}): {timing}")
         if not ok:
             console.print(f"    expected: {_pp(expected)}")
             console.print(f"    got:      {_pp(got)}")
@@ -286,13 +318,16 @@ def main(argv=None) -> int:
     for target in targets:
         if len(targets) > 1:
             console.print()
-            console.print(
-                Panel(
-                    f"[bold]{target.relative_to(REPO_ROOT)}[/bold]",
-                    title="suite",
-                    border_style="blue",
+            if _HAS_RICH:
+                console.print(
+                    Panel(
+                        f"[bold]{target.relative_to(REPO_ROOT)}[/bold]",
+                        title="suite",
+                        border_style="blue",
+                    )
                 )
-            )
+            else:  # pragma: no cover
+                console.print(f"== suite: {target.relative_to(REPO_ROOT)} ==")
         passed, failed, total, ms = run_tests_for(target)
         total_passed += passed
         total_failed += failed

@@ -1,14 +1,14 @@
-name,function,args,expected
-basic_example,solution,"[[1, 1, 1, 1, 1], 3]","5"
-single_element_same,solution,"[[1], 1]","1"
-single_element_diff,solution,"[[1], 2]","0"
-all_zeros,solution,"[[0, 0, 0], 0]","8"
-two_elements,solution,"[[1, 1], 0]","2"
-large_sum,solution,"[[1000, 1000, 1000], 1000]","3"
-no_solution,solution,"[[1, 2], 5]","0"
-all_same_target_zero,solution,"[[1, 1, 1, 1], 0]","6"
-min_length_min_target,solution,"[[1], 0]","0"
-max_length_max_target,solution,"[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0]","1024"
-target_equals_sum,solution,"[[1, 1, 1], 3]","1"
-target_negative_sum,solution,"[[1, 1, 1], -3]","1"
-large_n_numbers,solution,"[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 210]","1"
+name,function,args,expected,timeout_ms
+basic_example,solution,"[[1, 1, 1, 1, 1], 3]","5",1000
+single_element_same,solution,"[[1], 1]","1",1000
+single_element_diff,solution,"[[1], 2]","0",1000
+all_zeros,solution,"[[0, 0, 0], 0]","8",1000
+two_elements,solution,"[[1, 1], 0]","2",1000
+large_sum,solution,"[[1000, 1000, 1000], 1000]","3",1000
+no_solution,solution,"[[1, 2], 5]","0",1000
+all_same_target_zero,solution,"[[1, 1, 1, 1], 0]","6",1000
+min_length_min_target,solution,"[[1], 0]","0",1000
+max_length_max_target,solution,"[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0]","1024",1000
+target_equals_sum,solution,"[[1, 1, 1], 3]","1",1000
+target_negative_sum,solution,"[[1, 1, 1], -3]","1",1000
+large_n_numbers,solution,"[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 210]","1",1000

@@ -1,14 +1,14 @@
-name,function,args,expected
-basic_partition,solution,"[[1, 5, 5, 11]]","true"
-cannot_partition,solution,"[[1, 2, 3, 5]]","false"
-simple_two_elements,solution,"[[1, 1]]","true"
-single_element,solution,"[[1]]","false"
-all_same_values,solution,"[[2, 2, 2, 2]]","true"
-odd_sum_cannot_partition,solution,"[[1, 2, 3]]","true"
-large_sum,solution,"[[1, 2, 3, 4, 5, 6, 7]]","false"
-perfect_partition,solution,"[[3, 3, 3, 3]]","true"
-one_large_element,solution,"[[10, 1, 1]]","false"
-two_large_elements,solution,"[[5, 5, 10]]","true"
-sum_odd_auto_false,solution,"[[1, 3, 5]]","false"
-medium_test,solution,"[[1, 2, 3, 4, 5, 6, 7, 8]]","false"
-all_equal_even,solution,"[[4, 4, 4, 4, 4, 4]]","true"
+name,function,args,expected,timeout_ms
+basic_partition,solution,"[[1, 5, 5, 11]]","true",1000
+cannot_partition,solution,"[[1, 2, 3, 5]]","false",1000
+simple_two_elements,solution,"[[1, 1]]","true",1000
+single_element,solution,"[[1]]","false",1000
+all_same_values,solution,"[[2, 2, 2, 2]]","true",1000
+odd_sum_cannot_partition,solution,"[[1, 2, 3]]","true",1000
+large_sum,solution,"[[1, 2, 3, 4, 5, 6, 7]]","false",1000
+perfect_partition,solution,"[[3, 3, 3, 3]]","true",1000
+one_large_element,solution,"[[10, 1, 1]]","false",1000
+two_large_elements,solution,"[[5, 5, 10]]","true",1000
+sum_odd_auto_false,solution,"[[1, 3, 5]]","false",1000
+medium_test,solution,"[[1, 2, 3, 4, 5, 6, 7, 8]]","false",1000
+all_equal_even,solution,"[[4, 4, 4, 4, 4, 4]]","true",1000
